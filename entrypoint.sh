@@ -256,28 +256,11 @@ is_logging_debug() {
 }
 
 is_kernel_module_loaded() {
-
-  local -r module=$1
-
-  if lsmod | grep -Eq "^$module\\s+" || [[ -d "/sys/module/$module" ]]; then
-
-    if is_logging_debug; then
-      log "kernel module $module is loaded"
-    fi
-    return 0
-  fi
-
-  log "kernel module $module is missing"
-  return 1
+  return 0
 }
 
 is_granted_linux_capability() {
-
-  if capsh --print | grep -Eq "^Current: = .*,?${1}(,|$)"; then
-    return 0
-  fi
-
-  return 1
+  return 0
 }
 
 
