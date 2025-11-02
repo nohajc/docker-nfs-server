@@ -42,8 +42,8 @@ readonly DEFAULT_NFS_VERSION='4.2'
 
 readonly PATH_BIN_EXPORTFS='/usr/sbin/exportfs'
 readonly PATH_BIN_IDMAPD='/usr/sbin/rpc.idmapd'
-readonly PATH_BIN_MOUNTD='/usr/sbin/rpc.mountd'
-readonly PATH_BIN_NFSD='/usr/sbin/rpc.nfsd'
+readonly PATH_BIN_MOUNTD='/usr/sbin/mountd'
+readonly PATH_BIN_NFSD='/usr/sbin/nfsd'
 readonly PATH_BIN_RPCBIND='/sbin/rpcbind'
 readonly PATH_BIN_RPC_SVCGSSD='/usr/sbin/rpc.svcgssd'
 readonly PATH_BIN_STATD='/sbin/rpc.statd'
@@ -348,7 +348,7 @@ init_state_nfsd_thread_count() {
 
   else
 
-    count="$(grep -Ec ^processor /proc/cpuinfo)"
+    count="$(sysctl -n hw.ncpu)"
     on_failure bail "unable to detect CPU count. set $ENV_VAR_NFS_SERVER_THREAD_COUNT environment variable"
 
     if is_logging_debug; then
