@@ -44,7 +44,7 @@ readonly PATH_BIN_EXPORTFS='/usr/sbin/exportfs'
 readonly PATH_BIN_IDMAPD='/usr/sbin/rpc.idmapd'
 readonly PATH_BIN_MOUNTD='/usr/sbin/mountd'
 readonly PATH_BIN_NFSD='/usr/sbin/nfsd'
-readonly PATH_BIN_RPCBIND='/sbin/rpcbind'
+readonly PATH_BIN_RPCBIND='/usr/sbin/rpcbind'
 readonly PATH_BIN_RPC_SVCGSSD='/usr/sbin/rpc.svcgssd'
 readonly PATH_BIN_STATD='/sbin/rpc.statd'
 
@@ -217,7 +217,7 @@ stop() {
   fi
 
   term_process "$PATH_BIN_MOUNTD"
-  stop_exportfs
+  # stop_exportfs
   term_process "$PATH_BIN_RPCBIND"
 
   log_header 'terminated'
@@ -810,7 +810,7 @@ boot() {
   log_header 'starting services ...'
 
   boot_main_rpcbind
-  boot_main_exportfs
+  # boot_main_exportfs
   boot_main_mountd
   boot_main_statd
   boot_main_idmapd
