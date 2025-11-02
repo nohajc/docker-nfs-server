@@ -53,7 +53,7 @@ readonly PATH_FILE_ETC_IDMAPD_CONF='/etc/idmapd.conf'
 readonly PATH_FILE_ETC_KRB5_CONF='/etc/krb5.conf'
 readonly PATH_FILE_ETC_KRB5_KEYTAB='/etc/krb5.keytab'
 
-readonly REGEX_EXPORTS_LINES_TO_SKIP='^\s*#|^\s*$'
+readonly REGEX_EXPORTS_LINES_TO_SKIP='^[ \t]*#|^[ \t]*$'
 
 readonly LOG_LEVEL_INFO='INFO'
 readonly LOG_LEVEL_DEBUG='DEBUG'
