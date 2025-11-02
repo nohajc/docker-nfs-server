@@ -573,10 +573,8 @@ boot_main_mountd() {
   # --debug  turn on debugging. Valid kinds are: all, auth, call, general and parse.
   # --port   specifies the port number used for RPC listener sockets
 
-  local version_flags
-  read -r -a version_flags <<< "$(boot_helper_get_version_flags)"
   local -r port="${state[$STATE_MOUNTD_PORT]}"
-  local args=('--port' "$port" "${version_flags[@]}")
+  local args=('-p' "$port")
   if is_logging_debug; then
     args+=('--debug' 'all')
   fi
