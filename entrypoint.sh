@@ -46,7 +46,7 @@ readonly PATH_BIN_MOUNTD='/usr/sbin/mountd'
 readonly PATH_BIN_NFSD='/usr/sbin/nfsd'
 readonly PATH_BIN_RPCBIND='/usr/sbin/rpcbind'
 readonly PATH_BIN_RPC_SVCGSSD='/usr/sbin/rpc.svcgssd'
-readonly PATH_BIN_STATD='/sbin/rpc.statd'
+readonly PATH_BIN_STATD='/usr/sbin/rpc.statd'
 
 readonly PATH_FILE_ETC_EXPORTS='/etc/exports'
 readonly PATH_FILE_ETC_IDMAPD_CONF='/etc/idmapd.conf'
