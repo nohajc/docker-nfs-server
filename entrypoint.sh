@@ -47,6 +47,7 @@ readonly PATH_BIN_NFSD='/usr/sbin/nfsd'
 readonly PATH_BIN_RPCBIND='/usr/sbin/rpcbind'
 readonly PATH_BIN_RPC_SVCGSSD='/usr/sbin/rpc.svcgssd'
 readonly PATH_BIN_STATD='/usr/sbin/rpc.statd'
+readonly PATH_BIN_LOCKD='/usr/sbin/rpc.lockd'
 
 readonly PATH_FILE_ETC_EXPORTS='/etc/exports'
 readonly PATH_FILE_ETC_IDMAPD_CONF='/etc/idmapd.conf'
@@ -215,6 +216,8 @@ stop() {
   if is_nfs3_enabled; then
     term_process "$PATH_BIN_STATD"
   fi
+
+  term_process "$PATH_BIN_LOCKD"
 
   term_process "$PATH_BIN_MOUNTD"
   # stop_exportfs
@@ -574,7 +577,7 @@ boot_main_mountd() {
   # --port   specifies the port number used for RPC listener sockets
 
   local -r port="${state[$STATE_MOUNTD_PORT]}"
-  local args=('-p' "$port")
+  local args=('-n' '-p' "$port")
   if is_logging_debug; then
     args+=('--debug' 'all')
   fi
@@ -651,6 +654,10 @@ boot_main_statd() {
   fi
 
   $func "starting rpc.statd on port $port_in (outgoing from port $port_out)" $PATH_BIN_STATD "${args[@]}"
+}
+
+boot_main_lockd() {
+  boot_helper_start_daemon 'starting rpc.lockd' $PATH_BIN_LOCKD
 }
 
 boot_main_nfsd() {
@@ -810,6 +817,7 @@ boot() {
   # boot_main_exportfs
   boot_main_mountd
   boot_main_statd
+  boot_main_lockd
   boot_main_idmapd
   boot_main_nfsd
   boot_main_svcgssd
