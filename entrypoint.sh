@@ -182,7 +182,7 @@ stop_mount() {
 stop_nfsd() {
 
   log 'terminating nfsd'
-  $PATH_BIN_NFSD 0
+  service nfsd stop
   on_failure warn 'unable to terminate nfsd. if it had started already, check Docker host for lingering [nfsd] processes'
 }
 
@@ -642,12 +642,11 @@ boot_main_statd() {
   # --port           specifies the port number used for RPC listener sockets
 
   local -r port_in="${state[$STATE_STATD_PORT_IN]}"
-  local -r port_out="${state[$STATE_STATD_PORT_OUT]}"
-  local args=('--no-notify' '--port' "$port_in" '--outgoing-port' "$port_out")
+  local args=('-p' "$port_in")
   local func=boot_helper_start_daemon
 
   if is_logging_debug; then
-    args+=('--no-syslog' '--foreground')
+    args+=('-F')
     func=boot_helper_start_non_daemon
   fi
 
@@ -671,7 +670,7 @@ boot_main_nfsd() {
   read -r -a version_flags <<< "$(boot_helper_get_version_flags)"
   local -r threads="${state[$STATE_NFSD_THREAD_COUNT]}"
   local -r port="${state[$STATE_NFSD_PORT]}"
-  local args=('--tcp' '--udp' '--port' "$port" "${version_flags[@]}" "$threads")
+  local args=('-t' '-u' -n "$threads")
 
   if is_logging_debug; then
     args+=('--debug')
