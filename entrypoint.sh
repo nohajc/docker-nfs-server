@@ -53,9 +53,6 @@ readonly PATH_FILE_ETC_IDMAPD_CONF='/etc/idmapd.conf'
 readonly PATH_FILE_ETC_KRB5_CONF='/etc/krb5.conf'
 readonly PATH_FILE_ETC_KRB5_KEYTAB='/etc/krb5.keytab'
 
-readonly MOUNT_PATH_NFSD='/proc/fs/nfsd'
-readonly MOUNT_PATH_RPC_PIPEFS='/var/lib/nfs/rpc_pipefs'
-
 readonly REGEX_EXPORTS_LINES_TO_SKIP='^\s*#|^\s*$'
 
 readonly LOG_LEVEL_INFO='INFO'
@@ -222,8 +219,6 @@ stop() {
   term_process "$PATH_BIN_MOUNTD"
   stop_exportfs
   term_process "$PATH_BIN_RPCBIND"
-  stop_mount "$MOUNT_PATH_NFSD"
-  stop_mount "$MOUNT_PATH_RPC_PIPEFS"
 
   log_header 'terminated'
 
@@ -561,13 +556,6 @@ boot_helper_start_non_daemon() {
 ### primary boot
 ######################################################################################
 
-boot_main_mounts() {
-
-  # http://wiki.linux-nfs.org/wiki/index.php/Nfsv4_configuration
-  boot_helper_mount "$MOUNT_PATH_RPC_PIPEFS"
-  boot_helper_mount "$MOUNT_PATH_NFSD"
-}
-
 boot_main_exportfs() {
 
   local args=('-ar')
@@ -821,7 +809,6 @@ boot() {
 
   log_header 'starting services ...'
 
-  boot_main_mounts
   boot_main_rpcbind
   boot_main_exportfs
   boot_main_mountd
