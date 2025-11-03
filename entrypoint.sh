@@ -798,6 +798,8 @@ init() {
 
   log_header 'setting up ...'
 
+  ifconfig lo0 up # ensure loopback is up, otherwise rpcbind doesn't work
+
   init_state_logging
   init_state_nfsd_thread_count
   init_state_ports
