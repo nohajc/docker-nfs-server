@@ -610,7 +610,7 @@ boot_main_rpcbind() {
 
   local args=('-s')
   if is_logging_debug; then
-    arg+=('-d')
+    args+=('-d')
   fi
   boot_helper_start_daemon 'starting rpcbind' $PATH_BIN_RPCBIND "${args[@]}"
 }
